@@ -1,0 +1,29 @@
+/*  Max Sum of Rectangle No Larger Than K
+    link : https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/
+*/
+class Solution {
+    public: 
+       int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
+        int row = matrix.size(), col = matrix[0].size(), res = INT_MIN;
+        for(int left = 0 ; left < col ; left++){
+            vector<int> sum(row, 0);
+            for(int right = left ; right < col ; right++){
+                for(int r=0 ; r<row; r++){
+                    sum[r] += matrix[r][right];
+                }
+                set<int> mySet;
+                mySet.insert(0);
+                int currSum = 0, currMax = INT_MIN;
+                for(int r=0 ; r<row; r++){
+                    currSum+=sum[r];
+                    auto  it = mySet.lower_bound(currSum-k);
+                    if(it!=mySet.end()) currMax = max(currMax, currSum - (*it));
+                    mySet.insert(currSum);
+                }
+                res = max (res, currMax);
+            }
+        }
+        return res;
+    }  
+        
+};
