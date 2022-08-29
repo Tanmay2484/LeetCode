@@ -1,0 +1,29 @@
+/* Number of Islands
+  link : https://leetcode.com/problems/number-of-islands/
+*/
+class Solution {
+public:
+    void dfs(vector<vector<char>>& grid, int x, int y,vector<vector<int>>&vis){
+        int n=grid.size(),m=grid[0].size();
+        if(x<0 or x>=n or y<0 or y>=m or grid[x][y]!='1' or vis[x][y]) return ;
+        vis[x][y]=1;
+        dfs(grid,x+1,y,vis);
+        dfs(grid,x-1,y,vis);
+        dfs(grid,x,y+1,vis);
+        dfs(grid,x,y-1,vis);
+    }
+    
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int n=grid.size(),m=grid[0].size();
+        int res=0;
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        for(int i=0;i<n;i++)
+            for(int j=0;j<m;j++)
+                if(!vis[i][j] and grid[i][j]=='1') {
+                    res++;
+                    dfs(grid,i,j,vis);
+                }
+        return res;
+    }
+};
