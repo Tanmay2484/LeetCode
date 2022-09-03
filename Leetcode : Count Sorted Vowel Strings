@@ -1,0 +1,26 @@
+/* Count Sorted Vowel Strings
+   Link : https://leetcode.com/problems/count-sorted-vowel-strings/
+*/
+class Solution {
+public:
+    int countVowelStrings(int n) {
+      vector<int>dp(5,1);
+      int ans=0;
+      /*  
+        	  a  e  i  o  u
+    n=1 1  1  1  1  1  /a, e, i, o, u
+    n=2 5  4  3  2  1  /a-> aa,ae,ai,ao,au|e->ee,ei,eo,eu|i-> ii,io,iu | o-> oo,ou|u-> uu
+    n=3 15 10 6  3  1
+       after intialization of dp then we will go for the for loop
+      and we will start from n=3 beacuse of the dp table*/  
+      while(--n){// we can't use n-- beacuse it will not give us proper ans
+          for(int i=3;i>=0;i--){
+            dp[i]+=dp[i+1];
+        }
+      }
+        for(auto i:dp){
+            ans+=i;
+        }
+        return ans;
+    }
+};
