@@ -1,0 +1,14 @@
+/* 1323. Maximum 69 Number
+  Link :https://leetcode.com/problems/maximum-69-number/description/
+*/
+class Solution {
+public:
+    int maximum69Number (int num) {
+        int ans=0;
+        for(int i=1;i<=num;i*=10){
+            if((num/i)%10==6) ans=i;
+            cout<<i<<endl;cout<<ans;
+        }          
+        return num+=ans*3;
+    }
+};
