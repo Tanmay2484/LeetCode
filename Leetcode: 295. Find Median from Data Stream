@@ -1,0 +1,51 @@
+/* 295. Find Median from Data Stream
+  Link : https://leetcode.com/problems/find-median-from-data-stream/description/
+*/
+class MedianFinder {
+public:
+   priority_queue<int>mxh;                                  //max heap
+priority_queue<int,vector<int>,greater<int>> mnh;        //min heap
+
+MedianFinder() {
+}
+
+void addNum(int num) {
+    
+	//INSERTION
+    if(mxh.empty() || num<mxh.top()) mxh.push(num);               //if maxh is empty or num is smaller then maxh top, push in maxh      
+    else mnh.push(num);                                           //else push in minh
+    
+	//BALANCING HEAP
+    if(mxh.size()>mnh.size() && mxh.size()-mnh.size()>1){         //if maxh size is greater than minh (diff greater than 1)
+        mnh.push(mxh.top());                                      //then pop and push in minh
+        mxh.pop();
+    }
+    else if(mnh.size()>mxh.size() && mnh.size()-mxh.size()>1){    //if minh size is greater than maxh (diff greater than 1)
+        mxh.push(mnh.top());                                      //then pop and push in maxh
+        mnh.pop();
+    }
+}
+
+double findMedian() {
+    
+    if(mxh.size()==mnh.size()){                           //if maxh and minh size is equal, then return the 
+        double a=mxh.top(), b=mnh.top();                  //average of maxh.top and minh.top
+        return (a+b)/2.0;
+    }
+    else{
+        if(mxh.size()>mnh.size()){                        //else if maxh size is greater, return ,maxh top
+            return (double) mxh.top();
+        }
+        else{                                             //else return minh top
+            return (double) mnh.top();
+        }
+    }
+}
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
