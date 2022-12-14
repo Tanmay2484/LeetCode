@@ -1,0 +1,23 @@
+/*  198. House Robber
+    Link : https://leetcode.com/problems/house-robber/description/
+*/
+class Solution {
+public:
+   int rob(vector<int>& nums) {
+        
+        if(nums.size() == 0)
+            return 0;
+        
+        int incl = nums[0];
+        int excl = 0;
+        int exclNew = 0;
+        
+        for(int i=1; i<nums.size(); i++)
+        {
+            exclNew = max(incl, excl);
+            incl = nums[i] + excl;
+            excl = exclNew;
+        }
+        return max(excl, incl);
+    }
+};
