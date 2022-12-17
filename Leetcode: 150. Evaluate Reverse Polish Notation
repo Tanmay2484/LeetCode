@@ -1,0 +1,20 @@
+/* 150. Evaluate Reverse Polish Notation
+   Link : https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+*/
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<long >st;
+        for(string t:tokens){
+            if(t=="+" or t=="-" or t=="*" or t=="/"){
+                auto a=st.top();st.pop();
+                auto b=st.top();st.pop();
+                if(t=="+") st.push(b+a); 
+                if(t=="-") st.push(b-a);
+                if(t=="/") st.push(b/a);
+                if(t=="*") st.push(b*a);
+            } else st.push(stol(t));
+        }
+        return st.top();
+    }
+};
