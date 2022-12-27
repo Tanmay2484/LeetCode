@@ -1,0 +1,24 @@
+/* 2279. Maximum Bags With Full Capacity of Rocks
+  Link: https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/description/
+*/
+class Solution {
+public:
+    int maximumBags(vector<int>& capacity, vector<int>& rocks, int additionalRocks) {
+        int res=0;
+        vector<int>cap;
+        for(int i=0;i<size(capacity);i++)
+            cap.push_back(capacity[i]-rocks[i]);
+        
+        sort(begin(cap),end(cap));
+        for(int c:cap){
+            if(c==0) res++;
+            else {
+                if(additionalRocks<c) return res;
+                additionalRocks-=c;
+                res++;
+            }
+        }
+        
+        return res;
+    }
+};
