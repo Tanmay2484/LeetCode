@@ -1,0 +1,16 @@
+/* 1833. Maximum Ice Cream Bars
+   Link: https://leetcode.com/problems/maximum-ice-cream-bars/description/
+*/
+class Solution {
+public:
+    int maxIceCream(vector<int>& costs, int coins) {
+        sort(costs.begin(),costs.end());
+        int n=costs.size(),count=0;
+       for(auto i:costs){
+            if(coins-i < 0) break;
+            coins-=i;
+            count++;
+        }
+        return count;
+    }
+};
