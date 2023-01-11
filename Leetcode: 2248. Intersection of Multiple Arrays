@@ -1,0 +1,42 @@
+/* 2248. Intersection of Multiple Arrays
+  Link: https://leetcode.com/problems/intersection-of-multiple-arrays/description/
+*/
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+        vector<int>ans;
+        int check=nums.size();
+        unordered_map<int,int>m;
+        for(int i=0;i<check;i++){
+            for(int j=0;j<nums[i].size();j++){
+                m[nums[i][j]]++;
+            }
+        }
+        for(auto k:m){
+            if(k.second==check){
+                ans.push_back(k.first);
+            }
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+        vector<int>ans;
+        int check=nums.size();
+        map<int,int>m;
+        for(int i=0;i<check;i++){
+            for(int j=0;j<nums[i].size();j++){
+                m[nums[i][j]]++;
+            }
+        }//time complexity is O(n2)
+        for(auto k:m){
+            if(k.second==check){
+                ans.push_back(k.first);
+            }
+        }
+        return ans;
+    }
+};
