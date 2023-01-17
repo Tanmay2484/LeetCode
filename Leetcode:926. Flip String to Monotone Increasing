@@ -1,0 +1,33 @@
+/*926. Flip String to Monotone Increasing
+  Link: https://leetcode.com/problems/flip-string-to-monotone-increasing/description/
+*/
+class Solution {
+public:
+    unordered_map<int,int>mp;
+    vector<int>pre;
+    
+    int minFlipsMonoIncr(string s){
+        pre.resize(s.size()+1,0);
+        for(int i=s.size()-1;i>=0;i--)
+            pre[i]+=pre[i+1]+(s[i]=='0');
+        return minFlipsMonoIncr(s,0);
+    }
+
+    int minFlipsMonoIncr(string &s , int i) {
+        
+        if(i==s.size()) return 0;
+        if(mp.count(i)) return mp[i];
+        
+        if(s[i]=='0') return mp[i]=minFlipsMonoIncr(s,i+1);
+    
+        // if change it to 0
+        int a=1+minFlipsMonoIncr(s,i+1);
+        // if does not change
+        // number of zeroes on right needs to be changed
+        
+        int b=pre[i+1];
+    
+        return mp[i]=min(a,b);
+        
+    }
+};
