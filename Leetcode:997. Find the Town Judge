@@ -1,0 +1,15 @@
+   /* 997. Find the Town Judge
+      Link: https://leetcode.com/problems/find-the-town-judge/description/
+   */
+   int findJudge(int n, vector<vector<int>>& trust) {
+       vector<pair<int,int>>freq(n+1,{0,0});//stroing frq 
+       for(int i=0;i<trust.size();i++){
+           freq[trust[i][0]].first+=1;//counting left side of any pair in the  vector
+           freq[trust[i][1]].second+=1;//counting right side of any pair in the  vector
+       }
+       for(int i=1;i<=n;i++){
+           if(freq[i].second==n-1 && freq[i].first==0)//checking that trust==n-1
+                return i;             //and also that element will not trust anyone 
+       }
+       return -1;
+    }
