@@ -13,5 +13,5 @@ int minCost(string colors, vector<int>& neededTime) {
                 total+=neededTime[i] ,maxTime=max(maxTime,neededTime[i]) ,i++;
             res+=(total-maxTime);
         }
-        return res;//final  ans
+        return res;//final  ans ok
     }
