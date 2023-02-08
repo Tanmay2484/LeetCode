@@ -1,0 +1,17 @@
+/* 45. Jump Game II
+  Link: https://leetcode.com/problems/jump-game-ii/description/
+*/
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int lastpos=0,jumps=0,reach=0;
+        for(int i=0;i<nums.size()-1;i++){
+            reach=max(reach,nums[i]+i);
+            if(i==lastpos){
+                jumps++;
+                lastpos=reach;
+            }
+        }
+        return jumps;
+    }
+};
