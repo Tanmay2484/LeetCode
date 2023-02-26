@@ -1,0 +1,24 @@
+/* 72. Edit Distance
+   Link: https://leetcode.com/problems/edit-distance/description/
+*/
+class Solution {
+public:
+    
+int minDistance(string s1, string s2) {
+        int m=s1.size(),n=s2.size();
+        vector<int>cur(m+1,0),pre(m+1,0);
+        
+        for(int len=1;len<=m;len++) cur[len]=len , pre[len]=len;
+        
+        for(int len1=1;len1<=n;len1++){
+            cur[0]=len1;
+            for(int len2=1;len2<=m;len2++){
+                if(s2[len1-1]==s1[len2-1]) cur[len2]=pre[len2-1];
+                else cur[len2]=1+min({pre[len2-1],pre[len2],cur[len2-1]});
+            }
+            pre=cur;
+        }
+        
+        return cur[m];
+    }
+};
