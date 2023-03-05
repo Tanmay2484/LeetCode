@@ -1,0 +1,36 @@
+/* 1345. Jump Game IV
+   Link:
+*/
+class Solution {
+public:
+    
+int minJumps(vector<int>& arr) {
+        int n=size(arr);
+        queue<int>q;
+        q.push(0);
+        vector<int>vis(n,0);
+        unordered_map<int,vector<int>>mp;
+        for(int i=0;i<n;i++)
+            mp[arr[i]].push_back(i);
+        vis[0]=1;
+        int steps=0;
+        while(!q.empty()){
+            int s=size(q);
+            while(s--){
+                int i=q.front();
+                q.pop();
+                vis[i]=1;
+                if(i==n-1) return steps;
+                if(i-1>=0&&!vis[i-1]) q.push(i-1);
+                if(!vis[i+1]) q.push(i+1);
+                for(int k=mp[arr[i]].size()-1;k>=0;k--){
+                    int v=mp[arr[i]][k];
+                    if(!vis[v]) q.push(v);
+                }
+                mp.erase(arr[i]);  
+            }
+            steps++;
+        }
+        return -1;
+    }
+};
