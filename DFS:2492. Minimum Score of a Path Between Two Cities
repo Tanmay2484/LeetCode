@@ -1,0 +1,39 @@
+/* 2492. Minimum Score of a Path Between Two Cities
+   Link: https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/description/
+*/
+class Solution 
+{
+public:
+    int minScore(int n, vector<vector<int>>& roads) 
+    {
+        vector<pair<int, int>> G[n+1];
+        for(auto c:roads)
+        {
+            G[c[0]].push_back(make_pair(c[1], c[2]));
+            G[c[1]].push_back(make_pair(c[0], c[2]));
+        }
+
+        deque<int> Q;
+        Q.push_back(1);
+        int ans = 1e9;
+
+        vector<bool> visited(n+1, false);
+        visited[1] = true;
+
+        while(!Q.empty())
+        {
+            int node = Q.front();
+            Q.pop_front();
+            for(auto c: G[node])
+            {
+                if(!visited[c.first])
+                {
+                    Q.push_back(c.first);
+                    visited[c.first] = true;
+                }
+                ans = min(ans, c.second);
+            }
+        }
+        return ans; 
+    }
+};
