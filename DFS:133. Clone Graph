@@ -1,0 +1,19 @@
+
+/* 133. Clone Graph
+   Link: https://leetcode.com/problems/clone-graph/description/
+*/
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+        if(!node) return node;
+        if(map.find(node) == map.end()){
+            map[node] = new Node(node->val);
+            for(Node* temp : node->neighbors){
+                map.at(node)->neighbors.push_back(cloneGraph(temp));
+            }
+        }
+        return map.at(node);
+    }
+private:
+    unordered_map<Node*, Node*> map;
+};
