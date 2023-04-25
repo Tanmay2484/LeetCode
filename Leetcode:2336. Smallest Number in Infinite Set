@@ -1,0 +1,38 @@
+/* 2336. Smallest Number in Infinite Set
+  LInk:2336. Smallest Number in Infinite Set
+*/
+class SmallestInfiniteSet {
+public:
+    int c;
+    priority_queue<int> pq;
+    set<int> pres;
+    SmallestInfiniteSet() {
+        c=1;
+    }
+    int popSmallest() {
+        int n;
+        if(!pq.empty()){
+            n=-pq.top();
+            pq.pop();
+            pres.erase(n);
+            return n;
+        }
+        n=c;
+        c++;
+        return n;
+    }
+    
+    void addBack(int num) {
+        if(num>=c || pres.find(num) != pres.end())
+            return;
+        pres.insert(num);
+        pq.push(-num);
+    }
+};
+
+/**
+ * Your SmallestInfiniteSet object will be instantiated and called as such:
+ * SmallestInfiniteSet* obj = new SmallestInfiniteSet();
+ * int param_1 = obj->popSmallest();
+ * obj->addBack(num);
+ */
