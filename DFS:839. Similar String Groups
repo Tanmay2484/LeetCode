@@ -1,0 +1,63 @@
+/* 839. Similar String Groups
+   Link: https://leetcode.com/problems/similar-string-groups/description/
+*/
+class Solution {
+public:
+       int numSimilarGroups(vector<string>& A) {
+        std::vector<std::pair<int, int>> edge_list;
+        for (int i = 0; i < A.size(); ++i)
+        {
+            for (int j = i+1; j < A.size(); ++j)
+            {
+                if (check(A[i], A[j]))
+                {
+                    edge_list.emplace_back(std::make_pair(i, j));
+                }
+            }
+        }
+        std::vector<std::vector<int>> adjacency_list(A.size());
+        for (const auto& edge : edge_list)
+        {
+            adjacency_list[edge.first].emplace_back(edge.second);
+            adjacency_list[edge.second].push_back(edge.first);
+        }
+        std::vector<bool> visited(A.size());
+        int count = 0;
+        for (int i = 0; i < A.size(); ++i)
+        {
+            if (!visited[i])
+            {
+                visited[i] = true;
+                dfs(i, adjacency_list, visited);
+                count++;
+            }
+        }
+        return count;
+    }
+    
+private:
+    void dfs(int node, const std::vector<std::vector<int>>& adjacency_list, std::vector<bool>& visited)
+    {
+        for (const auto& neigh : adjacency_list[node])
+        {
+            if (!visited[neigh])
+            {
+                visited[neigh] = true;
+                dfs(neigh, adjacency_list, visited);
+            }
+        }
+    }
+    
+    bool check(const std::string& s1, const std::string& s2)
+    {
+        int count = 0;
+        for (int i = 0; i < s1.size(); ++i)
+        {
+            if (s1[i] != s2[i])
+            {
+                ++count;
+            }
+        }
+        return count == 2 || count == 0;
+    }
+};
