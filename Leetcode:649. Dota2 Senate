@@ -1,0 +1,38 @@
+/* 649. Dota2 Senate
+ Link: https://leetcode.com/problems/dota2-senate/description/
+*/
+class Solution {
+public:
+
+ string predictPartyVictory(string s) {
+    int n=s.size();
+    while(1){
+        int j=0;
+        while(j<n){
+            if(s[j]=='*')
+                j++;
+            else{
+                if(s[j]=='D'){
+                    int i=(j+1)%n;
+                    while(i!=j && s[i]!='R')
+                        i=(i+1)%n;
+                    if(i==j)
+                        return "Dire";
+                    else
+                        s[i]='*';
+                }
+                else{
+                    int i=(j+1)%n;
+                    while(i!=j && s[i]!='D')
+                        i=(i+1)%n;
+                    if(i==j)
+                        return "Radiant";
+                    else
+                        s[i]='*';
+                }
+                j++;
+            }
+        }
+    }
+}
+};
