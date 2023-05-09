@@ -1,0 +1,60 @@
+/* 54. Spiral Matrix
+   Link :https://leetcode.com/problems/spiral-matrix/description/
+*/
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+            int m = matrix.size( ), n = matrix[0].size( ), r = 0, c = 0, i, j;
+    
+    vector<int>v;
+    
+    if(matrix.empty()){
+        
+        return v;
+        
+    }
+    
+    while(r < m && c < n){
+        
+        for( i = c; i < n; i++){
+            
+           v. push_back(matrix[r][i]);
+        }
+        
+        r++;
+        
+        for(i = r; i < m; i++){
+            
+            v.push_back(matrix[i][n-1]);
+        }
+        n--;
+        
+        if(r < m){
+            
+            for( i = n -1; i >= c; i--){
+                
+                v.push_back(matrix[m-1][i]);
+            }
+            m--;
+        }
+        
+         if(c<n)
+        {
+            for(i=m-1;i>=r;i--){
+                
+                v.push_back(matrix[i][c]);
+                
+                
+            }
+            c++;
+        }
+        
+        
+        
+    }
+    
+    return v;
+    
+}
+
+};
