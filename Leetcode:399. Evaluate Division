@@ -1,0 +1,46 @@
+/* 399. Evaluate Division
+Link: https://leetcode.com/problems/evaluate-division/description/
+
+*/
+class Solution {
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        set<string>s;
+        vector<double>ans;
+        for(int i=0; i<equations.size(); i++){
+            s.insert(equations[i][0]);
+            s.insert(equations[i][1]);
+        }
+        unordered_map<string, vector<pair<string, double>>>m;
+        for(int i=0; i<equations.size(); i++){
+            m[equations[i][0]].push_back({equations[i][1], values[i]});
+            m[equations[i][1]].push_back({equations[i][0], (double)1/values[i]});
+        }
+        for(int i=0; i<queries.size(); i++){
+            queue<pair<string, double>>q;
+            set<string>v;
+            double val=-1;
+            q.push({queries[i][0], 1});
+            v.insert(queries[i][0]);
+            if(m.find(queries[i][1])!=m.end()){    
+                while(!q.empty()){
+                    string pos=q.front().first;
+                    double cnt=q.front().second;
+                    q.pop();
+                    if(pos==queries[i][1]){
+                        val=cnt;
+                        break;
+                    }
+                    for(auto it: m[pos]){
+                        if(v.find(it.first)==v.end()){
+                            v.insert(it.first);
+                            q.push({it.first, (double)it.second*cnt});
+                        }
+                    }
+                }
+            }
+            ans.push_back(val);
+        }
+        return ans;
+    }
+};
