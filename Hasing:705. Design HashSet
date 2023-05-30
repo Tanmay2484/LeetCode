@@ -1,0 +1,87 @@
+/* 705. Design HashSet
+  Link: https://leetcode.com/problems/design-hashset/description/
+*/
+
+class MyHashSet {
+public:
+    
+    vector<list<int>>bucket;
+    int size;
+    int capacity;
+    double load_factor = 0.75;
+    
+	// hash function
+    int hash(int key)
+    {
+        return key % capacity;
+    }
+    
+    // reshash the items in old bucket in to new bucket
+    void rehashbucket()
+    {
+        size = 0;
+        capacity = max(2,capacity);    
+        vector<list<int>> prev_bucket(move(bucket));
+        bucket = vector<list<int>>(capacity);
+        
+        for(auto &t : prev_bucket)
+            for(auto item : t)add(item);
+    }
+    
+    // check if key contains in the bucket
+    list<int>::iterator searchKey(int key)
+    {
+        int h = hash(key);
+        return find(bucket[h].begin(),bucket[h].end(),key);
+    }
+    
+    // Initialize size, capacity, load_factor and bucket
+    MyHashSet() {
+        
+        size = 0;
+        capacity = 2;
+        bucket = vector<list<int>>(capacity);
+    }
+    
+    // add key in to bucket if not already exists 
+    // double bucket size and reshash if item count crosses load_factor
+    void add(int key) {
+        
+        int h = hash(key);
+        if(contains(key)) return;
+        
+        size++;
+        bucket[h].push_back(key);
+        
+        if(size >= (load_factor * capacity))
+        {
+            capacity = capacity << 1;
+            rehashbucket();
+        }
+    }
+    
+    // remove key from bucket if exists 
+    // shrink bucket by half if item count less than load_factor/2
+    void remove(int key) {
+        
+        int h = hash(key);
+        list<int>::iterator it = searchKey(key);
+        if(it==bucket[h].end())return;
+        
+        size--;
+        bucket[h].erase(it);
+        
+        if(size <= (0.5 * load_factor * capacity))
+        {
+            capacity = capacity >> 1;
+            rehashbucket();
+        }
+    }
+    
+
+    // check if key contains in the bucket
+    bool contains(int key) {
+        int h = hash(key);
+        return searchKey(key)!=bucket[h].end();
+    }
+};
