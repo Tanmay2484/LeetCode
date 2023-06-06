@@ -1,0 +1,17 @@
+/* 1502. Can Make Arithmetic Progression From Sequence
+ Link: https://leetcode.com/problems/can-make-arithmetic-progression-from-sequence/description/
+*/
+class Solution {
+public:
+    bool canMakeArithmeticProgression(vector<int>& arr) {
+        sort(arr.begin(),arr.end());
+        bool ans=true;
+        for(int i=2;i<arr.size();i++){
+            int check=abs(arr[1]-arr[0]);
+            if(check!=abs(arr[i]-arr[i-1])){
+                ans=false;
+            }
+        }
+        return ans;
+    }
+};
