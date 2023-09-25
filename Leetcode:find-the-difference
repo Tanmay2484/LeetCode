@@ -1,0 +1,11 @@
+find-the-difference
+link: https://leetcode.com/problems/find-the-difference/description/?envType=daily-question&envId=2023-09-25
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+      char ans='\0';
+        for(auto i:s) ans^=i;
+        for(auto i:t) ans^=i;
+         return ans;
+    }
+};
