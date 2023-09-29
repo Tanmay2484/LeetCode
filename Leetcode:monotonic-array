@@ -1,0 +1,33 @@
+monotonic-array
+Link:https://leetcode.com/problems/monotonic-array/description/?envType=daily-question&envId=2023-09-29
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        string check="",acc="",dcc="";
+        for(int i=0;i<nums.size();i++){
+            check+=to_string(nums[i]);
+        }
+        sort(nums.begin(),nums.end());
+         for(int i=0;i<nums.size();i++){
+            acc+=to_string(nums[i]);
+        }
+         for(int i=nums.size()-1;i>=0;i--){
+            dcc+=to_string(nums[i]);
+        }
+        return((check==acc)||(check==dcc));
+    }
+};
+
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+       bool check1=true,check2=true;
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]>nums[i+1]) check1=false;  
+        }
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]<nums[i+1]) check2=false;  
+        }
+        return(check1 || check2);
+    }
+};
